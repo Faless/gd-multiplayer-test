@@ -28,6 +28,7 @@ class Client extends Node:
 	remote func client_message(message):
 		emit_signal("client_message", id, message)
 
+var _has_peer = false
 
 func _init():
 	add_user_signal("server_message",[{"name":"message","type":TYPE_RAW_ARRAY}])
@@ -42,10 +43,14 @@ func broadcast(message):
 		send(message, int(id))
 
 func send(message, id=1):
+	if not _has_peer:
+		return
+
 	if is_network_master():
 		rpc_id(id, "server_message", message)
 	else:
-		_clients[get_tree().get_network_unique_id()].rpc_id(id, "client_message", message)
+		if _clients.has(get_tree().get_network_unique_id()):
+			_clients[get_tree().get_network_unique_id()].rpc_id(id, "client_message", message)
 
 # This will be called on the client
 remote func server_message(message):
@@ -80,6 +85,7 @@ sync func remove_client(id):
 		_clients.erase(id)
 
 func create_server(port, clients=4):
+	_has_peer = true
 	var host = NetworkedMultiplayerENet.new()
 	host.create_server(port,clients)
 	get_tree().set_network_peer(host)
@@ -88,6 +94,7 @@ func create_server(port, clients=4):
 	#set_network_remote_owner(1)
 
 func create_client(ip, port):
+	_has_peer = true
 	var client = NetworkedMultiplayerENet.new()
 	client.create_client(ip,port)
 	get_tree().set_network_peer(client)
@@ -113,3 +120,12 @@ func clear():
 		_clients[id].disconnect("client_message",self,"_client_message")
 		_clients[id].queue_free()
 		_clients.erase(id)
+	get_tree().set_network_peer(null)
+	_has_peer = false
+	if get_tree().is_connected("connected_to_server", self, "client_connected"):
+		get_tree().disconnect("connected_to_server", self, "client_connected")
+		get_tree().disconnect("connection_failed", self, "connect_failed")
+		get_tree().disconnect("server_disconnected", self, "client_disconnect")
+	elif get_tree().is_connected("network_peer_connected", self, "peer_connected"):
+		get_tree().disconnect("network_peer_connected", self, "peer_connected")
+		get_tree().disconnect("network_peer_disconnected", self, "peer_disconnected")

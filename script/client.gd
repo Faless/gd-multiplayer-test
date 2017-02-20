@@ -28,3 +28,4 @@ func log_data(data):
 		msg += str(d)
 	msg += "\n"
 	get_node("Panel/msg/Label").add_text(msg)
+	printt(self, "Client log:" + msg)

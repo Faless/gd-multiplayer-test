@@ -22,7 +22,7 @@ class Client extends Node:
 		### This is a small patch I made.
 		### It restricts the calling client to the specific ID.
 		### See: https://github.com/Faless/godot/commit/24d3cef2b7b39fc1ef2df72ec1d3d7152e59a963
-		set_network_remote_owner(id) # Disable if building without patch (clients can impersonate each other)
+		#set_network_remote_owner(id) # Disable if building without patch (clients can impersonate each other)
 	
 	# This will be called on the server and with the patch will be guaranteed to be from this client
 	remote func client_message(message):
@@ -51,11 +51,12 @@ func send(message, id=1):
 remote func server_message(message):
 	emit_signal("server_message", message)
 
+# This will be called on the server
 func _client_message(id, message):
 	emit_signal("client_message", id, message)
 
 func peer_connected(id):
-	# Send already conntected clients tp new client
+	# Send already conntected clients to new client
 	for c in _clients:
 		rpc_id(id, "add_client", c)
 	# Add new client everywhere
@@ -84,6 +85,7 @@ func create_server(port, clients=4):
 	get_tree().set_network_peer(host)
 	get_tree().connect("network_peer_connected", self, "peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "peer_disconnected")
+	#set_network_remote_owner(1)
 
 func create_client(ip, port):
 	var client = NetworkedMultiplayerENet.new()
@@ -92,7 +94,7 @@ func create_client(ip, port):
 	get_tree().connect("connected_to_server", self, "client_connected")
 	get_tree().connect("connection_failed", self, "connect_failed")
 	get_tree().connect("server_disconnected", self, "client_disconnect")
-	set_network_remote_owner(1)
+	#set_network_remote_owner(1)
 
 func client_connected():
 	pass

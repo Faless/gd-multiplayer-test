@@ -1,6 +1,26 @@
 extends Node
 
-# I know, it's a lot of code, but I could not find any other way to have authoritative (safe) server
+# I know, it's a lot of code, but I could not find any other way to have authoritative (safe) server.
+# See comments below because a patch to Godot Engine is needed for making this really authoritative.
+
+# Use as a signleton.
+# Each peer will store the structure like this:
+# - root
+#   - network
+#     - client_id1
+#     - client_id2
+#     - ...
+#
+# "network" is controlled by the server (and if you want, root can be too) and will be used to communicate.
+# This channel is used from the server to communicate to the clients.
+# If you set the root node as owned by the server, you can use regular RPC to call functions from server
+# to clients, but not the other way around.
+#
+# Each "network" _subnode_ is controlled by the client with the respective ID and will be used as a feedback channel
+# for the server.
+# This channel can also be used to send client to client messages without the server handling it
+# (it will still flow through the server, so malicious server can read it!)
+
 
 # Safe communication channel with the client
 class Client extends Node:
@@ -29,14 +49,13 @@ class Client extends Node:
 		emit_signal("client_message", id, message)
 
 var _has_peer = false
+var _clients = {}
 
 func _init():
 	add_user_signal("server_message",[{"name":"message","type":TYPE_RAW_ARRAY}])
 	add_user_signal("client_message", [
 		{"name":"id","type":TYPE_INT},
 		{"name":"message","type":TYPE_RAW_ARRAY}])
-
-var _clients = {}
 
 func broadcast(message):
 	for id in _clients:

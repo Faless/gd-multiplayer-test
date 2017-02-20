@@ -9,6 +9,9 @@ onready var _Control = get_node("Control")
 func _ready():
 	_Control.set_focus_mode(FOCUS_ALL)
 
+func get_sub_tree():
+	return _tree
+
 func start(scene, singletons=[]):
 	_tree = SceneTree.new()
 	_tree.init()
@@ -23,8 +26,6 @@ func start(scene, singletons=[]):
 	get_node("Control/ViewportSprite").set_texture(_tex)
 
 	set_process(true)
-	set_process_input(true)
-	set_process_unhandled_key_input(true)
 	set_fixed_process(true)
 
 func _notification(what):
@@ -33,13 +34,6 @@ func _notification(what):
 
 func _update_tree_rect():
 	_tree.get_root().set_rect(_Control.get_rect())
-
-func _input(ev):
-	pass
-
-func _unhandled_key_input(key_event):
-	print(var2str(key_event))
-	print(_Control.has_focus())
 
 func _process(delta):
 	_tree.idle(delta)

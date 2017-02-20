@@ -15,7 +15,7 @@ focus/ignore_mouse = false
 focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 0.0
+margin/left = 138.0
 margin/top = 0.0
 margin/right = 0.0
 margin/bottom = 0.0
@@ -23,21 +23,68 @@ columns = 2
 
 [node name="Server" parent="GridContainer" instance=ExtResource( 2 )]
 
+margin/right = 441.0
+
 [node name="Client1" parent="GridContainer" instance=ExtResource( 2 )]
 
-margin/left = 514.0
-margin/right = 1024.0
+margin/left = 445.0
+margin/right = 886.0
 
 [node name="Client2" parent="GridContainer" instance=ExtResource( 2 )]
 
 margin/top = 302.0
+margin/right = 441.0
 margin/bottom = 600.0
 
 [node name="Client3" parent="GridContainer" instance=ExtResource( 2 )]
 
-margin/left = 514.0
+margin/left = 445.0
 margin/top = 302.0
-margin/right = 1024.0
+margin/right = 886.0
 margin/bottom = 600.0
+
+[node name="Panel" type="Panel" parent="."]
+
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 135.0
+margin/bottom = 0.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+alignment = 0
+
+[node name="Impersonate" type="Button" parent="Panel/VBoxContainer"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 135.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Impersonate Test"
+flat = false
+
+[connection signal="pressed" from="Panel/VBoxContainer/Impersonate" to="." method="_on_Impersonate_pressed"]
 
 

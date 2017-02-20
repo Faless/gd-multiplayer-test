@@ -1,5 +1,7 @@
 extends Control
 
+onready var network = get_node("/root/network")
+
 func _ready():
 	network.connect("client_message", self, "client_message")
 	network.connect("server_message", self, "server_message")
@@ -10,14 +12,19 @@ func _on_listen_toggled( pressed ):
 		int(get_node("Panel/config/port/LineEdit").get_text()))
 
 func client_message(id, message):
-	get_node("Panel/msg/Label").add_text("From " + str(id) + ":" + bytes2var(message) + "\n")
+	log_data(["From " + str(id) + ": " + bytes2var(message)])
 
 func server_message(message):
-	print("recv")
-	get_node("Panel/msg/Label").add_text("Server:" + bytes2var(message) + "\n")
+	log_data(["Server: " + bytes2var(message)])
 
 func _on_Send_pressed():
 	if get_node("Panel/msg/send/LineEdit").get_text() != "":
 		network.send(var2bytes(get_node("Panel/msg/send/LineEdit").get_text()))
-		print("send")
 	get_node("Panel/msg/send/LineEdit").set_text("")
+
+func log_data(data):
+	var msg = ""
+	for d in data:
+		msg += str(d)
+	msg += "\n"
+	get_node("Panel/msg/Label").add_text(msg)

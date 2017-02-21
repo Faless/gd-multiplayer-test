@@ -1,11 +1,11 @@
 extends Node
 
 static func setup(server, clients):
-	Globals.set("test_server", server)
-	Globals.set("test_clients", clients)
+	GlobalConfig.set("test_server", server)
+	GlobalConfig.set("test_clients", clients)
 
 static func test_impersonate():
-	var clients = Globals.get("test_clients")
+	var clients = GlobalConfig.get("test_clients")
 	assert(clients.size()>0)
 	var client = clients[clients.size()-1] # Last client is the bad guy!
 

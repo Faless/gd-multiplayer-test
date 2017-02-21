@@ -15,15 +15,15 @@ func get_sub_tree():
 func start(scene, singletons=[]):
 	_tree = SceneTree.new()
 	_tree.init()
-	_tree.get_root().set_as_render_target(true)
-	_tree.get_root().set_rect(_Control.get_rect())
-	_tex = _tree.get_root().get_render_target_texture()
+	_tree.get_root().set_size(_Control.get_size())
+	_tree.get_root().set_attach_to_screen_rect(_Control.get_global_rect())
+	_tex = _tree.get_root().get_texture()
 	
 	for s in singletons:
 		_tree.get_root().add_child(s)
 	_tree.get_root().add_child(scene)
 	
-	get_node("Control/ViewportSprite").set_texture(_tex)
+	get_node("Control/TextureRect").set_texture(_tex)
 
 	set_process(true)
 	set_fixed_process(true)
@@ -33,12 +33,19 @@ func _notification(what):
 		call_deferred("_update_tree_rect")
 
 func _update_tree_rect():
-	_tree.get_root().set_rect(_Control.get_rect())
+	_tree.get_root().set_size(_Control.get_size())
+	_tree.get_root().set_attach_to_screen_rect(_Control.get_global_rect())
 
 func _process(delta):
+	if _tree == null:
+		return
+
 	_tree.idle(delta)
 
 func _fixed_process(delta):
+	if _tree == null:
+		return
+
 	_tree.iteration(delta)
 
 func _exit_tree():

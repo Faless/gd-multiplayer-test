@@ -34,7 +34,7 @@ class Client extends Node:
 	
 	func _ready():
 		set_name(str(id))
-		if get_tree().get_network_unique_id():
+		if get_tree().get_network_unique_id() == id:
 			set_network_mode(NETWORK_MODE_MASTER)
 		else:
 			set_network_mode(NETWORK_MODE_SLAVE)

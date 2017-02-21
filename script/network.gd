@@ -34,10 +34,7 @@ class Client extends Node:
 	
 	func _ready():
 		set_name(str(id))
-		if get_tree().get_network_unique_id() == id:
-			set_network_mode(NETWORK_MODE_MASTER)
-		else:
-			set_network_mode(NETWORK_MODE_SLAVE)
+		set_network_remote(id)
 		
 		### This is a small patch I made.
 		### It restricts the calling client to the specific ID.

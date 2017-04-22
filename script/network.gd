@@ -57,12 +57,13 @@ func _init():
 func broadcast(message):
 	for id in _clients:
 		send(message, int(id))
+		_clients[id].rpc_id(int(id), "client_message", "asd")
 
 func send(message, id=1):
 	if not _has_peer:
 		return
 
-	if is_network_master():
+	if get_tree().get_network_unique_id() == 1:
 		rpc_id(id, "server_message", message)
 	else:
 		if _clients.has(get_tree().get_network_unique_id()):

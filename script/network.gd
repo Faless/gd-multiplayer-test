@@ -34,15 +34,8 @@ class Client extends Node:
 	
 	func _ready():
 		set_name(str(id))
-		if get_tree().get_network_unique_id() == id:
-			set_network_mode(NETWORK_MODE_MASTER)
-		else:
-			set_network_mode(NETWORK_MODE_SLAVE)
+		set_network_master(id)
 		
-		### This is a small patch I made.
-		### It restricts the calling client to the specific ID.
-		### See: https://github.com/Faless/godot/commit/24d3cef2b7b39fc1ef2df72ec1d3d7152e59a963
-		#set_network_remote_owner(id) # Disable if building without patch (clients can impersonate each other)
 	
 	# This will be called on the server and with the patch will be guaranteed to be from this client
 	remote func client_message(message):

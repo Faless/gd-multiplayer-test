@@ -54,7 +54,7 @@ func _exit_tree():
 
 func _on_Control_input_event( ev ):
 	if _tree != null:
-		if ev.type == InputEvent.MOUSE_BUTTON:
+		if ev.get_class() == "InputEventMouseButton":
 			_Control.grab_focus()
 		_tree.get_root().input(ev)
 		accept_event()

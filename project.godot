@@ -1,5 +1,7 @@
+config_version=3
 [application]
 
+run/main_scene="res://scene/main.tscn"
 name="kobuge_chat"
 main_scene="res://scene/main.tscn"
 icon="res://icon.png"

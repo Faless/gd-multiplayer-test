@@ -12,61 +12,77 @@ script = ExtResource( 1 )
 anchor_right = 1
 anchor_bottom = 1
 margin_left = 133.0
+rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
 columns = 2
 
 [node name="Server" parent="GridContainer" instance=ExtResource( 2 )]
 
 anchor_right = 0
 anchor_bottom = 0
-margin_right = 634.0
-margin_bottom = 423.0
+margin_right = 443.0
+margin_bottom = 298.0
+rect_pivot_offset = Vector2( 0, 0 )
 
 [node name="Client1" parent="GridContainer" instance=ExtResource( 2 )]
 
 anchor_right = 0
 anchor_bottom = 0
-margin_left = 638.0
-margin_right = 1272.0
-margin_bottom = 423.0
+margin_left = 447.0
+margin_right = 890.0
+margin_bottom = 298.0
+rect_pivot_offset = Vector2( 0, 0 )
 
 [node name="Client2" parent="GridContainer" instance=ExtResource( 2 )]
 
 anchor_right = 0
 anchor_bottom = 0
-margin_top = 427.0
-margin_right = 634.0
-margin_bottom = 850.0
+margin_top = 302.0
+margin_right = 443.0
+margin_bottom = 600.0
+rect_pivot_offset = Vector2( 0, 0 )
 
 [node name="Client3" parent="GridContainer" instance=ExtResource( 2 )]
 
 anchor_right = 0
 anchor_bottom = 0
-margin_left = 638.0
-margin_top = 427.0
-margin_right = 1272.0
-margin_bottom = 850.0
+margin_left = 447.0
+margin_top = 302.0
+margin_right = 890.0
+margin_bottom = 600.0
+rect_pivot_offset = Vector2( 0, 0 )
 
 [node name="Panel" type="Panel" parent="."]
 
 anchor_bottom = 1
 margin_right = 130.0
+rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 
+rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
 alignment = 0
 
 [node name="Impersonate" type="Button" parent="Panel/VBoxContainer"]
 
 margin_right = 125.0
 margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null

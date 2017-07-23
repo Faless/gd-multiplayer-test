@@ -38,7 +38,7 @@ class Client extends Node:
 		
 	
 	# This will be called on the server and with the patch will be guaranteed to be from this client
-	remote func client_message(message):
+	slave func client_message(message):
 		emit_signal("client_message", id, message)
 
 var _has_peer = false
@@ -65,7 +65,7 @@ func send(message, id=1):
 			_clients[get_tree().get_network_unique_id()].rpc_id(id, "client_message", message)
 
 # This will be called on the client
-remote func server_message(message):
+slave func server_message(message):
 	emit_signal("server_message", message)
 
 # This will be called on the server
